@@ -42,21 +42,21 @@ export function DashboardCard({
       onClick={onClick}
       data-testid={`card-${title.toLowerCase().replace(/\s+/g, '-')}`}
     >
-      <Card className={`relative overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 rounded-xl ${className}`}>
+      <Card className={`relative overflow-hidden bg-card border border-card-border shadow-sm hover:shadow-lg transition-all duration-300 rounded-xl ${className}`}>
         {gradient && (
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-transparent to-indigo-50" />
         )}
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 pt-4">
-          <CardTitle className="text-sm font-medium text-gray-600">
+          <CardTitle className="text-sm font-medium text-card-foreground">
             {title}
           </CardTitle>
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-sm">
-            <Icon className="h-5 w-5 text-white" />
+          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-sm">
+            <Icon className="h-5 w-5 text-primary-foreground" />
           </div>
         </CardHeader>
         <CardContent className="px-4 pb-4">
           <div className="space-y-2">
-            <div className="text-3xl font-bold text-gray-900">
+            <div className="text-3xl font-bold text-card-foreground">
               {typeof value === 'number' ? value.toLocaleString() : value}
             </div>
             <div className="flex items-center gap-2">
@@ -69,7 +69,7 @@ export function DashboardCard({
                 </Badge>
               )}
               {description && (
-                <p className="text-sm text-gray-500">{description}</p>
+                <p className="text-sm text-muted-foreground">{description}</p>
               )}
             </div>
           </div>

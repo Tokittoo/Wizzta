@@ -148,7 +148,7 @@ function App() {
 
   if (!user) {
     return (
-      <ThemeProvider defaultTheme="light" forcedTheme="light">
+      <ThemeProvider defaultTheme="light">
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <LoginForm onLogin={handleLogin} />
@@ -160,7 +160,7 @@ function App() {
   }
 
   return (
-    <ThemeProvider defaultTheme="light" forcedTheme="light">
+    <ThemeProvider defaultTheme="light">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <AuthenticatedApp user={user} onLogout={handleLogout} />

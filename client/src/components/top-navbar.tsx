@@ -32,15 +32,15 @@ export function TopNavbar({ onSearch, onLogout, notifications }: TopNavbarProps)
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="flex h-14 items-center px-4 gap-4">
-        <SidebarTrigger data-testid="button-sidebar-toggle" className="hover:bg-gray-100 rounded-lg" />
+        <SidebarTrigger data-testid="button-sidebar-toggle" className="hover:bg-muted rounded-lg" />
         
         <div className="flex-1 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Logo size="sm" showText={false} />
             <div>
-              <p className="text-sm text-gray-600">{new Date().toLocaleDateString('en-US', { 
+              <p className="text-sm text-muted-foreground">{new Date().toLocaleDateString('en-US', { 
                 day: 'numeric', 
                 month: 'long', 
                 year: 'numeric' 
