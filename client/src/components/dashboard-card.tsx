@@ -42,34 +42,34 @@ export function DashboardCard({
       onClick={onClick}
       data-testid={`card-${title.toLowerCase().replace(/\s+/g, '-')}`}
     >
-      <Card className={`relative overflow-hidden hover-elevate ${className}`}>
+      <Card className={`relative overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 rounded-xl ${className}`}>
         {gradient && (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-transparent to-indigo-50" />
         )}
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium text-muted-foreground">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 pt-4">
+          <CardTitle className="text-sm font-medium text-gray-600">
             {title}
           </CardTitle>
-          <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-            <Icon className="h-4 w-4 text-primary" />
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-sm">
+            <Icon className="h-5 w-5 text-white" />
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-4 pb-4">
           <div className="space-y-2">
-            <div className="text-2xl font-bold">
+            <div className="text-3xl font-bold text-gray-900">
               {typeof value === 'number' ? value.toLocaleString() : value}
             </div>
             <div className="flex items-center gap-2">
               {change && (
                 <Badge 
                   variant="outline" 
-                  className={`text-xs ${changeColors[changeType]}`}
+                  className={`text-xs px-3 py-1 rounded-full font-medium ${changeColors[changeType]}`}
                 >
                   {change}
                 </Badge>
               )}
               {description && (
-                <p className="text-xs text-muted-foreground">{description}</p>
+                <p className="text-sm text-gray-500">{description}</p>
               )}
             </div>
           </div>

@@ -9,7 +9,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Badge } from "@/components/ui/badge"
-import { CreditCard, Download, Calendar, DollarSign } from "lucide-react"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Progress } from "@/components/ui/progress"
+import { CreditCard, Download, Calendar, DollarSign, CheckCircle, AlertCircle, Receipt, FileText } from "lucide-react"
 import { StatusBadge } from "./status-badge"
 
 const paymentSchema = z.object({
@@ -30,6 +33,9 @@ interface FeeRecord {
   dueDate: string
   status: "paid" | "pending" | "overdue"
   paidDate?: string
+  transactionId?: string
+  paymentMethod?: string
+  receiptUrl?: string
 }
 
 interface FeesPaymentProps {
@@ -41,6 +47,9 @@ interface FeesPaymentProps {
 export function FeesPayment({ feeRecords, onPayment, onDownloadReceipt }: FeesPaymentProps) {
   const [selectedFee, setSelectedFee] = useState<FeeRecord | null>(null)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [paymentSuccess, setPaymentSuccess] = useState(false)
+  const [showReceipt, setShowReceipt] = useState(false)
+  const [generatedReceipt, setGeneratedReceipt] = useState<any>(null)
 
   const form = useForm<PaymentForm>({
     resolver: zodResolver(paymentSchema),
@@ -62,19 +71,115 @@ export function FeesPayment({ feeRecords, onPayment, onDownloadReceipt }: FeesPa
     setIsProcessing(true)
     // Simulate payment processing
     setTimeout(() => {
+      const transactionId = `TXN${Date.now()}`
+      const receipt = {
+        id: transactionId,
+        feeId: selectedFee.id,
+        description: selectedFee.description,
+        amount: selectedFee.amount,
+        paymentMethod: data.paymentMethod,
+        paidDate: new Date().toISOString(),
+        studentId: "STU2024001",
+        studentName: "John Doe"
+      }
+      
+      setGeneratedReceipt(receipt)
       onPayment(selectedFee.id, data)
       setIsProcessing(false)
-      setSelectedFee(null)
+      setPaymentSuccess(true)
+      setShowReceipt(true)
       form.reset()
     }, 3000)
+  }
+
+  const generateReceiptPDF = () => {
+    // Mock PDF generation
+    const receiptData = {
+      ...generatedReceipt,
+      institution: "EduSphere University",
+      address: "123 Education Street, Learning City, LC 12345",
+      phone: "+1 (555) 123-4567",
+      email: "finance@edusphere.edu"
+    }
+    
+    // In a real implementation, this would generate and download a PDF
+    console.log('Generating PDF receipt:', receiptData)
+    onDownloadReceipt(selectedFee?.id || '')
   }
 
   const totalPending = feeRecords
     .filter(fee => fee.status === "pending" || fee.status === "overdue")
     .reduce((sum, fee) => sum + fee.amount, 0)
 
+  const overdueFees = feeRecords.filter(fee => fee.status === "overdue")
+  const paidFees = feeRecords.filter(fee => fee.status === "paid")
+  const totalPaid = paidFees.reduce((sum, fee) => sum + fee.amount, 0)
+
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
+      {/* Payment Success Dialog */}
+      <Dialog open={showReceipt} onOpenChange={setShowReceipt}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <CheckCircle className="h-5 w-5 text-green-500" />
+              Payment Successful!
+            </DialogTitle>
+            <DialogDescription>
+              Your payment has been processed successfully.
+            </DialogDescription>
+          </DialogHeader>
+          {generatedReceipt && (
+            <div className="space-y-4">
+              <div className="p-4 border rounded-lg bg-green-50 dark:bg-green-950/20">
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span>Transaction ID:</span>
+                    <span className="font-mono">{generatedReceipt.id}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Amount:</span>
+                    <span className="font-semibold">₹{generatedReceipt.amount.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Payment Method:</span>
+                    <span className="capitalize">{generatedReceipt.paymentMethod}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Date:</span>
+                    <span>{new Date(generatedReceipt.paidDate).toLocaleDateString()}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button onClick={generateReceiptPDF} className="flex-1">
+                  <Download className="h-4 w-4 mr-2" />
+                  Download Receipt
+                </Button>
+                <Button variant="outline" onClick={() => setShowReceipt(false)}>
+                  Close
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Overdue Fees Alert */}
+      {overdueFees.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <Alert className="border-red-500/20 bg-red-500/5">
+            <AlertCircle className="h-4 w-4 text-red-500" />
+            <AlertDescription className="text-red-600">
+              You have {overdueFees.length} overdue fee{overdueFees.length > 1 ? 's' : ''} totaling ₹{overdueFees.reduce((sum, fee) => sum + fee.amount, 0).toLocaleString()}. 
+              Please pay them immediately to avoid additional charges.
+            </AlertDescription>
+          </Alert>
+        </motion.div>
+      )}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -86,7 +191,7 @@ export function FeesPayment({ feeRecords, onPayment, onDownloadReceipt }: FeesPa
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${totalPending.toLocaleString()}</div>
+            <div className="text-2xl font-bold">₹{totalPending.toLocaleString()}</div>
             <p className="text-xs text-muted-foreground">
               {feeRecords.filter(f => f.status !== "paid").length} pending payments
             </p>
@@ -99,7 +204,7 @@ export function FeesPayment({ feeRecords, onPayment, onDownloadReceipt }: FeesPa
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$2,450</div>
+            <div className="text-2xl font-bold">₹2,450</div>
             <p className="text-xs text-muted-foreground">Due this month</p>
           </CardContent>
         </Card>
@@ -110,8 +215,8 @@ export function FeesPayment({ feeRecords, onPayment, onDownloadReceipt }: FeesPa
             <CreditCard className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$12,780</div>
-            <p className="text-xs text-muted-foreground">Total payments made</p>
+            <div className="text-2xl font-bold">₹{totalPaid.toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground">{paidFees.length} payments made</p>
           </CardContent>
         </Card>
       </motion.div>
@@ -148,7 +253,7 @@ export function FeesPayment({ feeRecords, onPayment, onDownloadReceipt }: FeesPa
                       )}
                     </div>
                     <div className="text-right space-y-2">
-                      <p className="font-semibold">${fee.amount.toLocaleString()}</p>
+                      <p className="font-semibold">₹{fee.amount.toLocaleString()}</p>
                       <div className="flex items-center gap-2">
                         <StatusBadge status={fee.status} size="sm" />
                         {fee.status === "paid" && (
@@ -201,7 +306,7 @@ export function FeesPayment({ feeRecords, onPayment, onDownloadReceipt }: FeesPa
                           <FormControl>
                             <Input 
                               {...field} 
-                              value={`$${selectedFee.amount.toLocaleString()}`}
+                              value={`₹${selectedFee.amount.toLocaleString()}`}
                               disabled
                               data-testid="input-amount"
                             />
@@ -312,7 +417,7 @@ export function FeesPayment({ feeRecords, onPayment, onDownloadReceipt }: FeesPa
                       disabled={isProcessing}
                       data-testid="button-make-payment"
                     >
-                      {isProcessing ? "Processing Payment..." : `Pay $${selectedFee.amount.toLocaleString()}`}
+                      {isProcessing ? "Processing Payment..." : `Pay ₹${selectedFee.amount.toLocaleString()}`}
                     </Button>
                   </form>
                 </Form>

@@ -45,14 +45,13 @@ export function LoginForm({ onLogin }: LoginFormProps) {
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, duration: 0.3 }}
-              className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center"
+              className="mx-auto"
             >
-              <GraduationCap className="w-8 h-8 text-primary" />
             </motion.div>
             <div>
-              <CardTitle className="text-2xl font-bold">ERP Student Portal</CardTitle>
+              <CardTitle className="text-2xl font-bold">Wizzta</CardTitle>
               <CardDescription className="text-muted-foreground">
-                Access your personalized dashboard
+                Student Management System - Access your personalized dashboard
               </CardDescription>
             </div>
           </CardHeader>

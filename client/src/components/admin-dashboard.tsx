@@ -52,27 +52,31 @@ export function AdminDashboard({ data }: AdminDashboardProps) {
   ]
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
-      >
-        <div>
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <p className="text-muted-foreground">
-            Comprehensive overview of institutional metrics and analytics
-          </p>
+    <div className="min-h-screen bg-slate-50">
+      <div className="max-w-7xl mx-auto p-4 space-y-4">
+        {/* Header Section */}
+        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-between"
+          >
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+              <p className="text-gray-600">
+                Comprehensive overview of institutional metrics and analytics
+              </p>
+            </div>
+          </motion.div>
         </div>
-      </motion.div>
 
-      {/* Key Metrics */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4"
-      >
+        {/* Key Metrics */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3"
+        >
         <DashboardCard
           title="Total Students"
           value={data.totalStudents}
@@ -92,7 +96,7 @@ export function AdminDashboard({ data }: AdminDashboardProps) {
         />
         <DashboardCard
           title="Monthly Revenue"
-          value={`$${(data.totalRevenue / 1000).toFixed(0)}K`}
+          value={`₹${(data.totalRevenue / 1000).toFixed(0)}K`}
           change="+18%"
           changeType="positive"
           icon={DollarSign}
@@ -123,21 +127,21 @@ export function AdminDashboard({ data }: AdminDashboardProps) {
           icon={TrendingUp}
           description="Under review"
         />
-      </motion.div>
+        </motion.div>
 
-      {/* Charts Row 1 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Charts Row 1 */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="backdrop-blur-md bg-card/80" data-testid="chart-admissions">
-            <CardHeader>
-              <CardTitle>Admissions Trend</CardTitle>
-              <CardDescription>Monthly admissions vs applications received</CardDescription>
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl" data-testid="chart-admissions">
+            <CardHeader className="px-4 pt-4 pb-3">
+              <CardTitle className="text-lg font-semibold text-gray-900">Admissions Trend</CardTitle>
+              <CardDescription className="text-sm text-gray-600">Monthly admissions vs applications received</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-4 pb-4">
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={admissionsData}>
                   <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
@@ -163,12 +167,12 @@ export function AdminDashboard({ data }: AdminDashboardProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <Card className="backdrop-blur-md bg-card/80" data-testid="chart-revenue">
-            <CardHeader>
-              <CardTitle>Revenue Breakdown</CardTitle>
-              <CardDescription>Monthly revenue by category</CardDescription>
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl" data-testid="chart-revenue">
+            <CardHeader className="px-4 pt-4 pb-3">
+              <CardTitle className="text-lg font-semibold text-gray-900">Revenue Breakdown</CardTitle>
+              <CardDescription className="text-sm text-gray-600">Monthly revenue by category</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-4 pb-4">
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={revenueData}>
                   <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
@@ -189,21 +193,21 @@ export function AdminDashboard({ data }: AdminDashboardProps) {
             </CardContent>
           </Card>
         </motion.div>
-      </div>
+        </div>
 
-      {/* Charts Row 2 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Charts Row 2 */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <Card className="backdrop-blur-md bg-card/80" data-testid="chart-course-distribution">
-            <CardHeader>
-              <CardTitle>Course Distribution</CardTitle>
-              <CardDescription>Student enrollment by course</CardDescription>
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl" data-testid="chart-course-distribution">
+            <CardHeader className="px-4 pt-4 pb-3">
+              <CardTitle className="text-lg font-semibold text-gray-900">Course Distribution</CardTitle>
+              <CardDescription className="text-sm text-gray-600">Student enrollment by course</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-4 pb-4">
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
@@ -237,12 +241,12 @@ export function AdminDashboard({ data }: AdminDashboardProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <Card className="backdrop-blur-md bg-card/80" data-testid="chart-exam-performance">
-            <CardHeader>
-              <CardTitle>Exam Performance</CardTitle>
-              <CardDescription>Pass rates and average scores by subject</CardDescription>
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl" data-testid="chart-exam-performance">
+            <CardHeader className="px-4 pt-4 pb-3">
+              <CardTitle className="text-lg font-semibold text-gray-900">Exam Performance</CardTitle>
+              <CardDescription className="text-sm text-gray-600">Pass rates and average scores by subject</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-4 pb-4">
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={examPerformance}>
                   <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
@@ -262,6 +266,7 @@ export function AdminDashboard({ data }: AdminDashboardProps) {
             </CardContent>
           </Card>
         </motion.div>
+        </div>
       </div>
     </div>
   )

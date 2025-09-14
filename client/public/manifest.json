@@ -1,0 +1,21 @@
+{
+  "name": "Wizzta - Student Management System",
+  "short_name": "Wizzta",
+  "description": "Modern Student Management System with role-based dashboards for admissions, fees, hostel, and exams management.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4169E1",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg"
+    }
+  ]
+}

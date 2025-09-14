@@ -1,4 +1,4 @@
-# Futuristic ERP Student Management System - Design Guidelines
+# Wizzta - Student Management System - Design Guidelines
 
 ## Design Approach: Reference-Based (Productivity Apps)
 Drawing inspiration from modern productivity tools like Linear, Notion, and Asana, combined with futuristic design elements to create a cutting-edge educational management interface.

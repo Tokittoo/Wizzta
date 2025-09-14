@@ -69,33 +69,37 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
-      >
-        <div>
-          <h1 className="text-3xl font-bold">Welcome back, {student.name.split(' ')[0]}!</h1>
-          <p className="text-muted-foreground">
-            {student.course} • Semester {student.semester}
-          </p>
+    <div className="min-h-screen bg-slate-50">
+      <div className="max-w-7xl mx-auto p-4 space-y-4">
+        {/* Header Section */}
+        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-between"
+          >
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Welcome back, {student.name.split(' ')[0]}!</h1>
+              <p className="text-gray-600">
+                {student.course} • Semester {student.semester}
+              </p>
+            </div>
+            <div className="text-right">
+              <StatusBadge status={data.applicationStatus} />
+              <p className="text-sm text-gray-500 mt-1">
+                Student ID: {student.id}
+              </p>
+            </div>
+          </motion.div>
         </div>
-        <div className="text-right">
-          <StatusBadge status={data.applicationStatus} />
-          <p className="text-sm text-muted-foreground mt-1">
-            Student ID: {student.id}
-          </p>
-        </div>
-      </motion.div>
 
-      {/* Quick Stats */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-      >
+        {/* Quick Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3"
+        >
         <DashboardCard
           title="CGPA"
           value={cgpa.toFixed(1)}
@@ -113,9 +117,9 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
         />
         <DashboardCard
           title="Pending Fees"
-          value={`$${data.feesPending.toLocaleString()}`}
+          value={`₹${data.feesPending.toLocaleString()}`}
           icon={CreditCard}
-          description={`of $${data.feesTotal.toLocaleString()} total`}
+          description={`of ₹${data.feesTotal.toLocaleString()} total`}
           changeType={data.feesPending > 0 ? "negative" : "positive"}
         />
         <DashboardCard
@@ -124,9 +128,9 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
           icon={Calendar}
           description="This month"
         />
-      </motion.div>
+        </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Recent Grades */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -134,15 +138,15 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
           transition={{ delay: 0.2 }}
           className="lg:col-span-2"
         >
-          <Card className="backdrop-blur-md bg-card/80" data-testid="card-recent-grades">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Award className="h-5 w-5" />
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl" data-testid="card-recent-grades">
+            <CardHeader className="px-4 pt-4 pb-3">
+              <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+                <Award className="h-5 w-5 text-blue-600" />
                 Recent Grades
               </CardTitle>
-              <CardDescription>Your latest exam results</CardDescription>
+              <CardDescription className="text-sm text-gray-600">Your latest exam results</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-4 pb-4">
               <div className="space-y-4">
                 {data.recentGrades.map((grade, index) => (
                   <motion.div
@@ -150,7 +154,7 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 * index }}
-                    className="flex items-center justify-between p-3 border rounded-lg hover-elevate"
+                    className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
                     data-testid={`grade-${grade.subject.replace(/\s+/g, '-').toLowerCase()}`}
                   >
                     <div className="space-y-1">
@@ -174,7 +178,7 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
                     </div>
                   </motion.div>
                 ))}
-                <Button variant="outline" className="w-full" data-testid="button-view-all-grades">
+                <Button variant="outline" className="w-full rounded-lg" data-testid="button-view-all-grades">
                   View All Results
                 </Button>
               </div>
@@ -191,18 +195,18 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
         >
           {/* Room Assignment */}
           {data.roomAssignment && (
-            <Card className="backdrop-blur-md bg-card/80" data-testid="card-room-assignment">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Building className="h-5 w-5" />
+            <Card className="bg-white border border-gray-200 shadow-sm rounded-xl" data-testid="card-room-assignment">
+              <CardHeader className="px-4 pt-4 pb-3">
+                <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+                  <Building className="h-5 w-5 text-blue-600" />
                   Room Assignment
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-4 pb-4">
                 <div className="text-center space-y-2">
                   <div className="text-2xl font-bold">{data.roomAssignment}</div>
                   <p className="text-sm text-muted-foreground">Building A, Floor 2</p>
-                  <Button size="sm" variant="outline" className="w-full" data-testid="button-view-room-details">
+                  <Button size="sm" variant="outline" className="w-full rounded-lg" data-testid="button-view-room-details">
                     View Details
                   </Button>
                 </div>
@@ -211,30 +215,30 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
           )}
 
           {/* Fee Payment Progress */}
-          <Card className="backdrop-blur-md bg-card/80" data-testid="card-fee-progress">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5" />
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl" data-testid="card-fee-progress">
+            <CardHeader className="px-4 pt-4 pb-3">
+              <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+                <CreditCard className="h-5 w-5 text-blue-600" />
                 Fee Payment
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="px-4 pb-4 space-y-3">
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>Paid</span>
-                  <span>${(data.feesTotal - data.feesPending).toLocaleString()}</span>
+                  <span>₹{(data.feesTotal - data.feesPending).toLocaleString()}</span>
                 </div>
                 <Progress 
                   value={((data.feesTotal - data.feesPending) / data.feesTotal) * 100} 
                   className="h-2"
                 />
                 <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Total: ${data.feesTotal.toLocaleString()}</span>
-                  <span>Pending: ${data.feesPending.toLocaleString()}</span>
+                  <span>Total: ₹{data.feesTotal.toLocaleString()}</span>
+                  <span>Pending: ₹{data.feesPending.toLocaleString()}</span>
                 </div>
               </div>
               {data.feesPending > 0 && (
-                <Button size="sm" className="w-full" data-testid="button-pay-fees">
+                <Button size="sm" className="w-full rounded-lg" data-testid="button-pay-fees">
                   Pay Pending Fees
                 </Button>
               )}
@@ -242,14 +246,14 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
           </Card>
 
           {/* Attendance Overview */}
-          <Card className="backdrop-blur-md bg-card/80" data-testid="card-attendance">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <User className="h-5 w-5" />
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl" data-testid="card-attendance">
+            <CardHeader className="px-4 pt-4 pb-3">
+              <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+                <User className="h-5 w-5 text-blue-600" />
                 Attendance
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="px-4 pb-4 space-y-3">
               <div className="text-center">
                 <div className="text-3xl font-bold">{attendancePercentage}%</div>
                 <p className="text-sm text-muted-foreground">Current semester</p>
@@ -261,23 +265,23 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
             </CardContent>
           </Card>
         </motion.div>
-      </div>
+        </div>
 
-      {/* Announcements */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        <Card className="backdrop-blur-md bg-card/80" data-testid="card-announcements">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5" />
-              Recent Announcements
-            </CardTitle>
-            <CardDescription>Important updates and notices</CardDescription>
-          </CardHeader>
-          <CardContent>
+        {/* Announcements */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl" data-testid="card-announcements">
+            <CardHeader className="px-4 pt-4 pb-3">
+              <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+                <FileText className="h-5 w-5 text-blue-600" />
+                Recent Announcements
+              </CardTitle>
+              <CardDescription className="text-sm text-gray-600">Important updates and notices</CardDescription>
+            </CardHeader>
+            <CardContent className="px-4 pb-4">
             <div className="space-y-3">
               {data.announcements.slice(0, 5).map((announcement, index) => {
                 const Icon = getAnnouncementIcon(announcement.type)
@@ -287,7 +291,7 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.05 * index }}
-                    className="flex items-start gap-3 p-3 border rounded-lg hover-elevate cursor-pointer"
+                    className="flex items-start gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
                     data-testid={`announcement-${announcement.id}`}
                   >
                     <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -308,13 +312,14 @@ export function StudentDashboard({ student, data }: StudentDashboardProps) {
                   </motion.div>
                 )
               })}
-              <Button variant="outline" className="w-full" data-testid="button-view-all-announcements">
+              <Button variant="outline" className="w-full rounded-lg" data-testid="button-view-all-announcements">
                 View All Announcements
               </Button>
             </div>
           </CardContent>
         </Card>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   )
 }

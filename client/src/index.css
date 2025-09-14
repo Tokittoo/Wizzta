@@ -14,67 +14,67 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
 
-  --background: 220 20% 98%;
+  --background: 220 15% 97%; /* Light blue-gray background */
 
   --foreground: 220 40% 15%;
 
   --border: 220 15% 88%;
 
-  --card: 220 30% 95%;
+  --card: 0 0% 100%; /* Pure white cards */
 
   --card-foreground: 220 40% 15%;
 
-  --card-border: 220 20% 90%;
+  --card-border: 220 15% 90%;
 
-  --sidebar: 220 25% 92%;
+  --sidebar: 0 0% 100%; /* White sidebar */
 
   --sidebar-foreground: 220 40% 15%;
 
-  --sidebar-border: 220 20% 87%;
+  --sidebar-border: 220 15% 90%;
 
-  --sidebar-primary: 220 90% 60%;
+  --sidebar-primary: 220 90% 60%; /* Blue accent */
 
-  --sidebar-primary-foreground: 220 20% 98%;
+  --sidebar-primary-foreground: 0 0% 100%;
 
-  --sidebar-accent: 220 25% 88%;
+  --sidebar-accent: 220 15% 95%;
 
   --sidebar-accent-foreground: 220 40% 15%;
 
   --sidebar-ring: 220 90% 60%;
 
-  --popover: 220 30% 93%;
+  --popover: 0 0% 100%;
 
   --popover-foreground: 220 40% 15%;
 
-  --popover-border: 220 25% 87%;
+  --popover-border: 220 15% 90%;
 
-  --primary: 220 90% 60%;
+  --primary: 220 90% 60%; /* Blue primary */
 
-  --primary-foreground: 220 20% 98%;
+  --primary-foreground: 0 0% 100%;
 
-  --secondary: 220 25% 88%;
+  --secondary: 220 15% 95%;
 
   --secondary-foreground: 220 40% 15%;
 
-  --muted: 220 20% 90%;
+  --muted: 220 15% 95%;
 
   --muted-foreground: 220 30% 40%;
 
-  --accent: 260 15% 89%;
+  --accent: 220 15% 95%;
 
-  --accent-foreground: 260 40% 20%;
+  --accent-foreground: 220 40% 15%;
 
   --destructive: 0 85% 60%;
 
   --destructive-foreground: 0 20% 98%;
 
-  --input: 220 30% 80%;
+  --input: 220 15% 95%;
   --ring: 220 90% 60%;
-  --chart-1: 220 90% 55%;
-  --chart-2: 260 85% 60%;
-  --chart-3: 140 70% 50%;
-  --chart-4: 35 95% 55%;
-  --chart-5: 320 80% 60%;
+  --chart-1: 220 90% 55%; /* Blue charts */
+  --chart-2: 260 85% 60%; /* Purple charts */
+  --chart-3: 140 70% 50%; /* Green charts */
+  --chart-4: 35 95% 55%; /* Orange charts */
+  --chart-5: 320 80% 60%; /* Pink charts */
 
   --font-sans: Inter, sans-serif;
   --font-serif: Georgia, serif;

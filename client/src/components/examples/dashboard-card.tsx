@@ -32,7 +32,7 @@ export default function DashboardCardExample() {
         />
         <DashboardCard
           title="Revenue"
-          value="$45,231"
+          value="₹45,231"
           change="+8%"
           changeType="positive"
           icon={DollarSign}

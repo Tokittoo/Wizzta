@@ -14,6 +14,29 @@ import Admissions from "@/pages/admissions"
 import Fees from "@/pages/fees"
 import Hostel from "@/pages/hostel"
 import Exams from "@/pages/exams"
+import Timetable from "@/pages/timetable"
+import Assignments from "@/pages/assignments"
+import StaffAssignments from "@/pages/staff-assignments"
+import StaffStudents from "@/pages/staff-students"
+import AdminStaff from "@/pages/admin-staff"
+import AdminStudents from "@/pages/admin-students"
+import AdminAdmissions from "@/pages/admin-admissions"
+import AdminServiceDesk from "@/pages/admin-service-desk"
+import AdminLogs from "@/pages/admin-logs"
+import AdminLibrary from "@/pages/admin-library"
+import AdminFees from "@/pages/admin-fees"
+import AdminSalary from "@/pages/admin-salary"
+import StaffSalary from "@/pages/staff-salary"
+import AdminExaminations from "@/pages/admin-examinations"
+import StaffAttendance from "@/pages/staff-attendance"
+import ServiceDesk from "@/pages/service-desk"
+import ExamResults from "@/pages/exam-results"
+import StudentHallTicket from "@/pages/student-hall-ticket"
+import AdminHallTicket from "@/pages/admin-hall-ticket"
+import StaffQuestionPattern from "@/pages/staff-question-pattern"
+import StaffQuestionBank from "@/pages/staff-question-bank"
+import AdminQuestionGenerator from "@/pages/admin-question-generator"
+import AdminPatternUpload from "@/pages/admin-pattern-upload"
 import NotFound from "@/pages/not-found"
 
 type UserRole = "student" | "staff" | "admin"
@@ -63,13 +86,32 @@ function AuthenticatedApp({ user, onLogout }: { user: User; onLogout: () => void
             <Switch>
               <Route path="/" component={() => <Dashboard userRole={user.role} currentUser={user} />} />
               <Route path="/dashboard" component={() => <Dashboard userRole={user.role} currentUser={user} />} />
-              <Route path="/admissions" component={Admissions} />
-              <Route path="/my-application" component={Admissions} />
+              <Route path="/service-desk" component={() => <ServiceDesk userRole={user.role} currentUser={user} />} />
               <Route path="/fees" component={Fees} />
               <Route path="/hostel" component={() => <Hostel userRole={user.role} currentUser={user} />} />
               <Route path="/exams" component={() => <Exams userRole={user.role} />} />
-              <Route path="/analytics" component={() => <Dashboard userRole={user.role} currentUser={user} />} />
-              <Route path="/users" component={() => <Dashboard userRole={user.role} currentUser={user} />} />
+              <Route path="/exam-results" component={() => <ExamResults />} />
+              <Route path="/student-hall-ticket" component={() => <StudentHallTicket />} />
+              <Route path="/timetable" component={() => <Timetable userRole={user.role} currentUser={user} />} />
+              <Route path="/assignments" component={() => <Assignments userRole={user.role} currentUser={user} />} />
+              <Route path="/staff-assignments" component={() => <StaffAssignments userRole={user.role} currentUser={user} />} />
+              <Route path="/staff-students" component={() => <StaffStudents userRole={user.role} currentUser={user} />} />
+              <Route path="/staff-salary" component={() => <StaffSalary currentUser={user} />} />
+              <Route path="/staff-attendance" component={() => <StaffAttendance currentUser={user} />} />
+              <Route path="/staff-question-pattern" component={() => <StaffQuestionPattern />} />
+              <Route path="/staff-question-bank" component={() => <StaffQuestionBank />} />
+              <Route path="/admin-students" component={() => <AdminStudents userRole={user.role} currentUser={user} />} />
+              <Route path="/admin-staff" component={() => <AdminStaff userRole={user.role} currentUser={user} />} />
+              <Route path="/admin-admissions" component={() => <AdminAdmissions />} />
+              <Route path="/admin-service-desk" component={() => <AdminServiceDesk userRole={user.role} currentUser={user} />} />
+              <Route path="/admin-logs" component={() => <AdminLogs userRole={user.role} currentUser={user} />} />
+              <Route path="/admin-library" component={() => <AdminLibrary />} />
+              <Route path="/admin-fees" component={() => <AdminFees />} />
+              <Route path="/admin-salary" component={() => <AdminSalary />} />
+              <Route path="/admin-examinations" component={() => <AdminExaminations />} />
+              <Route path="/admin-hall-ticket" component={() => <AdminHallTicket />} />
+              <Route path="/admin-question-generator" component={() => <AdminQuestionGenerator />} />
+              <Route path="/admin-pattern-upload" component={() => <AdminPatternUpload />} />
               <Route path="/settings" component={() => <Dashboard userRole={user.role} currentUser={user} />} />
               <Route component={NotFound} />
             </Switch>
@@ -106,7 +148,7 @@ function App() {
 
   if (!user) {
     return (
-      <ThemeProvider defaultTheme="dark">
+      <ThemeProvider defaultTheme="light" forcedTheme="light">
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <LoginForm onLogin={handleLogin} />
@@ -118,7 +160,7 @@ function App() {
   }
 
   return (
-    <ThemeProvider defaultTheme="dark">
+    <ThemeProvider defaultTheme="light" forcedTheme="light">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <AuthenticatedApp user={user} onLogout={handleLogout} />
