@@ -1,5 +1,5 @@
 <div align="left" style="position: relative;">
-<img src="https://img.icons8.com/?size=512&id=55494&format=png" align="right" width="30%" style="margin: -20px 0 0 20px;">
+<img src="https://github.com/Tokittoo/Wizzta/blob/main/client/public/logo.svg" align="right" width="30%" style="margin: -20px 0 0 20px;">
 <h1>WIZZTA</h1>
 <p align="left">
 	<em><code>❯ REPLACE-ME</code></em>
